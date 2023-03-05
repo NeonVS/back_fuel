@@ -72,8 +72,26 @@ exports.login = async(req, res, next)=>{
         await User.findByIdAndUpdate({_id:user._id},{token:token});
         res.status(200).json({
             userId:user._id,
+            username:user.username,
             message: 'success',
             token: token
+        })
+    }catch(error){
+        if(!error.statusCode){
+            error.statusCode = 500;
+        }
+        return next(error);
+    }
+}
+
+exports.verify = async(req, res, next)=>{
+    try{
+        const user = await User.findOne({email:req.email});
+        res.status(200).json({
+            userId:user._id,
+            email:user.email,
+            username:user.username,
+            message: 'verified'
         })
     }catch(error){
         if(!error.statusCode){

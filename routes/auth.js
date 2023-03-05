@@ -3,6 +3,7 @@ const {body} = require('express-validator');
 
 const User = require('../models/user');
 const authController = require('../controllers/auth');
+const isAuth = require('../middleware/isAuth');
 
 const router = express.Router();
 
@@ -56,5 +57,7 @@ router.post('/login', [
         min: 8
     }).withMessage('Password must be at least 8 characters long!')
     ], authController.login);
+
+router.get('/verify', isAuth, authController.verify)
 
 module.exports = router;

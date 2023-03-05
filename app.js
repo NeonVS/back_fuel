@@ -11,10 +11,6 @@ require('./config/configuration')(app,mongoose);
 //Router
 app.use('/auth',authRoutes);
 
-app.use('/',(req,res)=>{
-    console.log('hello');
-})
-
 app.use((error,req,res,next)=>{
     console.log(error);
     const status = error.statusCode || 500;
