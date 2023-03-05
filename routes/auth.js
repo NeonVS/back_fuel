@@ -22,11 +22,27 @@ router.post('/signup',[
         })
     })
     .normalizeEmail(),
+    body('username')
+    .trim()
+    .isLength({
+        min: 4
+    }).withMessage('Username must be at least 4 characters long!')
+    .custom((value, {
+        req
+    }) => {
+        return User.findOne({
+            username: value
+        }).then(userDoc => {
+            if (userDoc) {
+                return Promise.reject('Username address already exists!');
+            }
+        })
+    }),
     body('password')
     .trim()
     .isLength({
         min: 8
-    }).withMessage('Password must be at least 8 characters long!'),
+    }).withMessage('Password must be at least 8 characters long!')
     ], authController.signup);
 
 router.post('/login', [
@@ -38,7 +54,7 @@ router.post('/login', [
     .trim()
     .isLength({
         min: 8
-    }),
+    }).withMessage('Password must be at least 8 characters long!')
     ], authController.login);
 
 module.exports = router;

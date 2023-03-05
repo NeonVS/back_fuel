@@ -16,6 +16,7 @@ exports.signup = async(req, res, next) => {
     try{
         const email = req.body.email;
         const password = req.body.password;
+        const username = req.body.username;
         let hashPw;
         try{
             hashPw = await bcrypt.hash(password,12);
@@ -24,6 +25,7 @@ exports.signup = async(req, res, next) => {
         }
         const user = new User({
             email: email,
+            username: username,
             password: hashPw
         });
         const savedUser = await user.save();

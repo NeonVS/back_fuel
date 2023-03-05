@@ -13,7 +13,7 @@ module.exports = (app,mongoose) =>{
         next();
     });
 
-    mongoose.connect(`mongodb+srv://ujjwalchitransh:${process.env.MONGO_PASS}@cluster0.l63ztef.mongodb.net/${process.env.MONGO_NAME}?retryWrites=true&w=majority`,{useUnifiedTopology:true,useNewUrlParser:true}).then(async result => {
+    mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASS}@${process.env.MONGO_CLUSTER_ID}/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,{useUnifiedTopology:true,useNewUrlParser:true}).then(async result => {
         const port = process.env.PORT || 3000;
         const server = app.listen(port);
         console.log("SERVER STARTED AT PORT:" + port)
